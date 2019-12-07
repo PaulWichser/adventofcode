@@ -17,11 +17,24 @@ class Orb(object):			#Orbit object that has a name and a single parent
 #build orbits from file function
 def orbuild(filename):
 	file = open(filename,'r')
-	
+	#readline
+	orbs = {}
+	for x in file:
+		y = x.split(')')
+		orbs.setdefault(y[0],Orb())
+		orbs.setdefault(y[1],Orb())
+		orbs[y[1]].parent = orbs[y[0]]
+	return orbs
+	#parse line with separator
+	#check if parent exists, create if not
+	#create child Orb
+
 
 #test section
-file = open('day6-1test.txt','r')
-print(file.read())
+orbitest = orbuild('day6-1test.txt')
+print(orbitest)
+#file = open('day6-1test.txt','r')
+#print(file.read())
 
 #take input from command line for data text file
 #read data text file to data
