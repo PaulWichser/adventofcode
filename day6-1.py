@@ -8,10 +8,10 @@ class Orb(object):			#Orbit object that has a name and a single parent
 		cnt = 0
 		X = self
 		while X.parent != None:
-			print(X.name)
+#			print(X.name)
 			cnt+=1
 			X = X.parent
-			print(cnt)
+#			print(cnt)
 		return cnt
 
 #build orbits from file function
@@ -33,6 +33,15 @@ def orbuild(filename):
 #test section
 orbitest = orbuild('day6-1test.txt')
 print(orbitest)
+c = 0
+for x in orbitest:
+#	print(x)
+#	print(orbitest[x])
+	c += orbitest[x].count()
+	print(c)
+if c != 42:
+	print('orbitest failure')
+	quit()
 #file = open('day6-1test.txt','r')
 #print(file.read())
 
