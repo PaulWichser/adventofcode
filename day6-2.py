@@ -32,7 +32,7 @@ def orbuild(filename):
 		orbs.setdefault(y[0],Orb())
 		orbs.setdefault(y[1],Orb())
 		orbs[y[1]].parent = orbs[y[0]]
-		orbs[y[1]].name = orbs[y[1]]
+		orbs[y[1]].name = y[1]
 	return orbs
 
 #count all orbits in file. returns int
@@ -42,36 +42,46 @@ def orbitcount(orbdict):
 		c += orbdict[x].count()
 	return c
 
+#find the shortest route between two orbits, returns int
 def orbitmeet(orbdict,one,two):
 	meetdict = {}
 	#make a sub-dict for one to root path
-	X = meetdict[one]
-	while X.parent != None:
+	X = orbdict[one]
+	while X.name in orbdict:
 #		Null()
+		print('Adding %s' % X.name)
 		meetdict.setdefault(X.name,X)
 		X = X.parent
-
+	print('After %s, meetdict is:' % one)
+	print(meetdict)
 	#make a sub-dict for two to first shared node
 	X = orbdict[two]
-	while X.parent != None:
-		if X in meetdict != true:
+	Y = Orb()
+	while X.name in orbdict:
+		if X.name not in meetdict:
+			print('Adding %s' % X.name)
 			meetdict.setdefault(X.name,X)
 			X = X.parent
 		else: break
-	X = meetdict[X.name]
-	while X.parent != None:
-		meetdict.pop(X.name)
-		X = X.parent
-	meetdict.pop(X.name)
-	return meetdict
+	print('After %s, meetdict is:' % two)
+	print(meetdict)
+
+	Y = X.parent
+	X.parent = None
+	while Y.name in meetdict:
+		print('Removing %s' % Y.name)
+		meetdict.pop(Y.name)
+		Y = Y.parent
+	print("After cleanup, meetdict is:")
+	print(meetdict)
+
+	return len(meetdict)-3	#minus start, end, and one stop (counting jumps)
 
 
 #test section
 orbitest = orbuild('day6-2test.txt')
 print(orbitest)
-orbitmeetest = orbitmeet(orbitest,'YOU','SAN')
-print(orbitmeetest)
-orbitestcount = orbitcount(orbitmeetest)
+orbitestcount = orbitmeet(orbitest,'YOU','SAN')
 print(orbitestcount)
 if orbitestcount != 4:
 	print('orbitest failure')
@@ -80,4 +90,5 @@ else: print('orbitest success')
 
 loadfile = 'day6-1input.txt'
 orbits = orbuild(loadfile)
-print('The total orbits of %s are %i' % (loadfile,orbitcount(orbits)))
+orbitmeetcount = orbitmeet(orbits,'YOU','SAN')
+print('The shortest distance between YOU and SAN is %i jumps' % orbitmeetcount)
