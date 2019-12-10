@@ -17,7 +17,11 @@ def wireimp(filename):
             line = line.rstrip('\n')
             list = line.split(',')
             wires['wire%i' % x] = list
+<<<<<<< HEAD
             # print(len(wires))
+=======
+            print(len(wires))
+>>>>>>> 1631137c269fdb829e0896b69b34371fd5f2e87b
             x += 1
     print("Imported wire dictionary of length %i" % len(wires))
     return wires
