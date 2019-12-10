@@ -9,11 +9,11 @@ def intcomp(listdata):
         if listdata[x] == 1:
             listdata[listdata[x+3]] = listdata[listdata[x+1]] + listdata[listdata[x+2]]
             x += 4
-#            print(listdata)
+            print(listdata)
         elif listdata[x] == 2:
             listdata[listdata[x+3]] = listdata[listdata[x+1]] * listdata[listdata[x+2]]
             x += 4
-#            print(listdata)
+            print(listdata)
         else:
             print('Unexpected opcode: %i' % x)
             quit()
