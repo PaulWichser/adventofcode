@@ -11,10 +11,13 @@ def intimp(filename):
 
 def wireimp(filename):
     with open(filename,'r') as file:
-        wires = []
+        wires = {}
+        x=1
         for line in file:
             line = line.rstrip('\n')
             list = line.split(',')
-            wires.append(list)
-            print(len(wires))
+            wires['wire%i' % x] = list
+            # print(len(wires))
+            x += 1
+    print("Imported wire dictionary of length %i" % len(wires))
     return wires
