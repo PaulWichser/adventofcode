@@ -11,7 +11,10 @@ def intimp(filename):
 
 def wireimp(filename):
     with open(filename,'r') as file:
+        wires = []
         for line in file:
             line = line.rstrip('\n')
             list = line.split(',')
-            
+            wires.append(list)
+            print(len(wires))
+    return wires
