@@ -16,32 +16,46 @@ def getcode(intnum):
 
 def getvalue(listdata,mode,loc):
     print('mode: %i, loc: %i' % (mode,loc))
-    if mode == 0:
-        print(listdata[loc])
-        return listdata[loc]
-    elif mode == 1:
-        print(loc)
-        return loc
-    else:
-        print('Unrecognized mode: %i' % mode)
-        quit()
-
+    try:
+        if mode == 0:
+            # print(listdata[loc])
+            return listdata[loc]
+        elif mode == 1:
+            # print(loc)
+            return loc
+        else:
+            print('Unrecognized mode: %i' % mode)
+            quit()
+    except:
+        listdata.append(-1)
+        return -1
 def intcomp(listdata):
     x = 0
     while x < len(listdata):
         print('x = %i' % x)
         code = getcode(listdata[x])
         op = code[len(code)-1] + (code[len(code)-2] * 10)
+        mode1 = code[-3]
+        mode2 = code[-4]
+        mode3 = code[-5]
+        ploc1 = x+1
+        ploc2 = x+2
+        ploc3 = x+3
+        pval1 = getvalue(listdata,mode1,ploc1)
+        pval2 = getvalue(listdata,mode2,ploc2)
+        pval3 = getvalue(listdata,mode3,ploc3)
 
         if op == 1:
-            listdata[getvalue(listdata,code[len(code)-5],x+3)] = listdata[getvalue(listdata,code[len(code)-4],x+2)] + listdata[getvalue(listdata,code[len(code)-3],x+1)]
+            # listdata[pval3] = listdata[pval2] + listdata[pval1]
+            listdata[pval3] = listdata[pval2] + listdata[pval1]
             x += 4
-            print(listdata)
+            # print(listdata)
 
         elif op == 2:
-            listdata[getvalue(listdata,code[len(code)-5],x+3)] = listdata[getvalue(listdata,code[len(code)-4],x+2)] * listdata[getvalue(listdata,code[len(code)-3],x+1)]
+            listdata[pval1] = listdata[pval2] * listdata[pval1]
+            # listdata[pval3] = listdata[pval2] * listdata[pval1]
             x += 4
-            print(listdata)
+            # print(listdata)
 
         elif op == 3:
             listdata[listdata[x+1]] = int(input('Enter intcomp value: '))
@@ -49,38 +63,38 @@ def intcomp(listdata):
 
         elif op == 4:
             print('Intcomp value output: %i' % listdata[listdata[x+1]])
-            if listdata[getvalue(listdata,code[len(code)-3],x+1)] != 0:
+            if listdata[pval1] != 0:
                 if listdata[x+2] == 99:
-                    print('Diagnostic code: %i' % listdata[getvalue(listdata,code[len(code)-3],x+1)])
+                    print('Diagnostic code: %i' % listdata[pval1])
                     quit()
-                print('Unexpected value %i at location %i' % (listdata[getvalue(listdata,code[len(code)-3],x+1)],listdata[x+1]))
+                print('Unexpected value %i at location %i' % (listdata[pval1],listdata[x+1]))
                 quit()
             x += 2
 
         elif op == 5:
-            if listdata[getvalue(listdata,code[len(code)-3],x+1)] != 0:
-                x += listdata[getvalue(listdata,code[len(code)-4],x+2)]
+            if listdata[pval1] != 0:
+                x += listdata[pval2]
             else:
                 x += 3
 
         elif op == 6:
-            if listdata[getvalue(listdata,code[len(code)-3],x+1)] == 0:
-                x += listdata[getvalue(listdata,code[len(code)-4],x+2)]
+            if listdata[pval1] == 0:
+                x += listdata[pval2]
             else:
                 x += 3
 
         elif op == 7:
-            if listdata[getvalue(listdata,code[len(code)-3],x+1)] < listdata[getvalue(listdata,code[len(code)-4],x+2)]:
-                listdata[getvalue(listdata,code[len(code)-5],x+3)] = 1
+            if listdata[pval1] < listdata[pval2]:
+                listdata[pval3] = 1
             else:
-                listdata[getvalue(listdata,code[len(code)-5],x+3)] = 0
+                listdata[pval3] = 0
             x += 4
 
         elif op == 8:
-            if listdata[getvalue(listdata,code[len(code)-3],x+1)] == listdata[getvalue(listdata,code[len(code)-4],x+2)]:
-                listdata[getvalue(listdata,code[len(code)-5],x+3)] = 1
+            if listdata[pval1] == listdata[pval2]:
+                listdata[pval3] = 1
             else:
-                listdata[getvalue(listdata,code[len(code)-5],x+3)] = 0
+                listdata[pval3] = 0
             x += 4
 
         elif op == 99:
