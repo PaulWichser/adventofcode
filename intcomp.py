@@ -1,8 +1,3 @@
-import fileimp
-#Solution for https://adventofcode.com/2019/day/5
-testdata = [3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99]
-# inputdata = [1,0,0,3,1,1,2,3,1,3,4,3,1,5,0,3,2,1,10,19,1,6,19,23,2,23,6,27,2,6,27,31,2,13,31,35,1,10,35,39,2,39,13,43,1,43,13,47,1,6,47,51,1,10,51,55,2,55,6,59,1,5,59,63,2,9,63,67,1,6,67,71,2,9,71,75,1,6,75,79,2,79,13,83,1,83,10,87,1,13,87,91,1,91,10,95,2,9,95,99,1,5,99,103,2,10,103,107,1,107,2,111,1,111,5,0,99,2,14,0,0]
-
 def getcode(intnum):
     strnum = str(intnum)
     code = []
@@ -30,6 +25,27 @@ def getvalue(listdata,mode,loc):
         listdata.append(-1)
         return -1
 
+def getvals(listdata,code,loc,params):
+    mode = [code[2],code[1],code[0]]
+    ploc = [loc+1,loc+2,loc+3]
+    for i in range(params):
+        vals[i] = getvalue(listdata,mode[i],ploc[i])
+    return vals
+
+def intop3(listdata,code,loc,params):
+    listd = getvals(listdata,code,loc,params)
+    listdata[listdata[loc+1]] = int(input('Enter intcomp value: '))
+
+def intop4(listdata,code,loc,params):
+    print('Intcomp value output: %i' % listdata[listdata[loc+1]])
+    listd = getvals(listdata,code,loc,params)
+    if listd[0] != 0:
+        if listdata[x+2] == 99:
+            print('Diagnostic code: %i' % listd[0])
+            quit()
+        else:
+            print('Unexpected value %i at location %i' % (listd[0],listdata[x+1]))
+            quit()
 
 
 def intcomp(listdata):
@@ -38,34 +54,23 @@ def intcomp(listdata):
         print('x = %i' % x)
         code = getcode(listdata[x])
         op = code[-1] + (code[-2] * 10)
-        mode1 = code[-3]
-        mode2 = code[-4]
-        mode3 = code[-5]
-        ploc1 = x+1
-        ploc2 = x+2
-        ploc3 = x+3
         pval1 = getvalue(listdata,mode1,ploc1)
         listd1 = listdata[pval1]
+        params = 1
 
         if op == 99:
             break
 
         elif op == 3:
-            listdata[listdata[x+1]] = int(input('Enter intcomp value: '))
-            x += 2
+            listop3(listdata,code,x,params)
+            x += 
 
         elif op == 4:
-            print('Intcomp value output: %i' % listdata[listdata[x+1]])
-            if listd1 != 0:
-                if listdata[x+2] == 99:
-                    print('Diagnostic code: %i' % listd1)
-                    quit()
-                else:
-                    print('Unexpected value %i at location %i' % (listd1,listdata[x+1]))
-                    quit()
+            listop4(listdata,code,x,params)
             x += 2
 
         else:
+            params = 2
             pval2 = getvalue(listdata,mode2,ploc2)
             listd2 = listdata[pval2]
 
@@ -73,7 +78,7 @@ def intcomp(listdata):
                 if listd1 != 0:
                     x += listd2
                 else:
-                    x += 3
+                    x +=
 
             elif op == 6:
                 if listd1 == 0:
@@ -119,7 +124,7 @@ def intcomp(listdata):
                     print('Unexpected opcode: %i at %i' % (listdata[x], x))
                     x += 4
                     break
-
+    x += params+1
     print(listdata)
     print('Intcode computer position 0 = %i' % listdata[0])
     return listdata[0]
