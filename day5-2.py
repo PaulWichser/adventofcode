@@ -34,7 +34,7 @@ def intcomp(listdata):
     while x < len(listdata):
         print('x = %i' % x)
         code = getcode(listdata[x])
-        op = code[len(code)-1] + (code[len(code)-2] * 10)
+        op = code[-1] + (code[-2] * 10)
         mode1 = code[-3]
         mode2 = code[-4]
         mode3 = code[-5]
@@ -42,20 +42,10 @@ def intcomp(listdata):
         ploc2 = x+2
         ploc3 = x+3
         pval1 = getvalue(listdata,mode1,ploc1)
-        pval2 = getvalue(listdata,mode2,ploc2)
-        pval3 = getvalue(listdata,mode3,ploc3)
+        listd1 = listdata[pval1]
 
-        if op == 1:
-            # listdata[pval3] = listdata[pval2] + listdata[pval1]
-            listdata[pval3] = listdata[pval2] + listdata[pval1]
-            x += 4
-            # print(listdata)
-
-        elif op == 2:
-            listdata[pval1] = listdata[pval2] * listdata[pval1]
-            # listdata[pval3] = listdata[pval2] * listdata[pval1]
-            x += 4
-            # print(listdata)
+        if op == 99:
+            break
 
         elif op == 3:
             listdata[listdata[x+1]] = int(input('Enter intcomp value: '))
@@ -63,47 +53,69 @@ def intcomp(listdata):
 
         elif op == 4:
             print('Intcomp value output: %i' % listdata[listdata[x+1]])
-            if listdata[pval1] != 0:
+            if listd1 != 0:
                 if listdata[x+2] == 99:
-                    print('Diagnostic code: %i' % listdata[pval1])
+                    print('Diagnostic code: %i' % listd1)
                     quit()
-                print('Unexpected value %i at location %i' % (listdata[pval1],listdata[x+1]))
-                quit()
+                else:
+                    print('Unexpected value %i at location %i' % (listd1,listdata[x+1]))
+                    quit()
             x += 2
 
-        elif op == 5:
-            if listdata[pval1] != 0:
-                x += listdata[pval2]
-            else:
-                x += 3
-
-        elif op == 6:
-            if listdata[pval1] == 0:
-                x += listdata[pval2]
-            else:
-                x += 3
-
-        elif op == 7:
-            if listdata[pval1] < listdata[pval2]:
-                listdata[pval3] = 1
-            else:
-                listdata[pval3] = 0
-            x += 4
-
-        elif op == 8:
-            if listdata[pval1] == listdata[pval2]:
-                listdata[pval3] = 1
-            else:
-                listdata[pval3] = 0
-            x += 4
-
-        elif op == 99:
-            break
-
         else:
-            print('Unexpected opcode: %i at %i' % (listdata[x], x))
-            x += 4
-            break
+            pval2 = getvalue(listdata,mode2,ploc2)
+            listd2 = listdata[pval2]
+
+            if op == 5:
+                if listd1 != 0:
+                    x += listd2
+                else:
+                    x += 3
+
+            elif op == 6:
+                if listd1 == 0:
+                    x += listd2
+                else:
+                    x += 3
+
+            else:
+                pval3 = getvalue(listdata,mode3,ploc3)
+                listd3 = listdata[pval3]
+
+                if op == 1:
+                    listdata[pval3] = listd2 + listd1
+                    print('%i at listdata[%i]' % (listd3,pval3))
+                    x += 4
+                    # print(listdata)
+
+                elif op == 2:
+                    listdata[pval3] = listd2 * listd1
+                    print('%i at listdata[%i]' % (listd3,pval3))
+                    x += 4
+                    # print(listdata)
+
+                elif op == 7:
+                    if listd1 < listd2:
+                        listdata[pval3] = 1
+                        print('1 at listdata[%i]' % pval3)
+                    else:
+                        listdata[pval3] = 0
+                        print('0 at listdata[%i]' % pval3)
+                    x += 4
+
+                elif op == 8:
+                    if listd1 == listd2:
+                        listdata[pval3] = 1
+                        print('1 at listdata[%i]' % pval3)
+                    else:
+                        print('0 at listdata[%i]' % pval3)
+                        listdata[pval3] = 0
+                    x += 4
+
+                else:
+                    print('Unexpected opcode: %i at %i' % (listdata[x], x))
+                    x += 4
+                    break
 
     print(listdata)
     print('Intcode computer position 0 = %i' % listdata[0])
