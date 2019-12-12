@@ -9,7 +9,10 @@ if fuelcalc(1969) != 654 or fuelcalc(100756) != 33583:
     quit()
 
 masses = fileimp.listimp('day1-1input.txt')
-fuel = 0
+fueltot = 0
 for m in masses:
-    fuel += fuelcalc(m)
-print ("Fuel required = %i" % fuel)
+    fuel = fuelcalc(m)
+    while fuel > 0:
+        fueltot += fuel
+        fuel = fuelcalc(fuel)
+print ("Fuel required = %i" % fueltot)
