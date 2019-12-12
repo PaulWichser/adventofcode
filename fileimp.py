@@ -7,13 +7,14 @@ def listimp(filename):
     return list
 
 def intimp(filename):
+    list=[]
     with open(filename,'r') as file:
         for line in file:
             line = line.rstrip('\n')
-            list = line.split(',')
+            inlist = line.split(',')
             # print(len(list))
-        for x in range(len(list)):
-            list[x] = int(list[x])
+            for x in range(len(inlist)):
+                list.append(int(inlist[x]))
     print("Imported int list of length %i" % len(list))
     return list
 
