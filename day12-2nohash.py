@@ -61,13 +61,13 @@ def mooncalc(filename,steps):
 
 def moonreturn(filename):
     moons = moonimp(filename)
-    hash = hashlib.md5(str(moons).encode('utf-8')).hexdigest()[8:]
+    hash = str(moons)
     hashes = []
     while hash not in hashes:
         hashes.append(hash)
         moonvel(moons)
         moonpos(moons)
-        hash = hashlib.md5(str(moons).encode('utf-8')).hexdigest()[8:]
+        hash = str(moons)
         # print(hash)
         # print(hashes)
     print('It took %i steps to return the system to repeat a position' % (len(hashes)))
