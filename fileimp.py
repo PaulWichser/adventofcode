@@ -1,3 +1,11 @@
+def listimp(filename):
+    with open(filename,'r') as file:
+        list = []
+        for line in file:
+            line = line.rstrip('\n')
+            list.append(int(line))
+    return list
+
 def intimp(filename):
     with open(filename,'r') as file:
         for line in file:
