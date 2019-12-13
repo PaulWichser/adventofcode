@@ -30,3 +30,34 @@ def wireimp(filename):
             x += 1
     print("Imported wire dictionary of length %i" % len(wires))
     return wires
+
+def sifimp(filename,w,h):
+    list = []
+    with open(filename,'r') as file:
+        for line in file:
+            line = line.rstrip('\n')
+            for ch in line:
+                list.append(int(ch))
+    image = {}
+    line = []
+    i = 0
+    j = 0
+    k = 0
+    l = 0
+    while i < len(list):
+        image['L%i' % l] = []
+        j = 0
+        while j < h:
+            # image['L%i' % l][j] = []
+            line = []
+            k = 0
+            while k < w:
+                line.append(list[i])
+                print(line)
+                i += 1
+                k += 1
+            image['L%i' % l].append(line.copy())
+            print(image)
+            j += 1
+        l += 1
+    return image
