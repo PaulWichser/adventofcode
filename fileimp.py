@@ -61,3 +61,22 @@ def sifimp(filename,w,h):
             j += 1
         l += 1
     return image
+
+def asterimp(filename):
+    asterlist = []
+    with open(filename,'r') as file:
+        i = 0
+        for line in file:
+            line = line.rstrip('\n')
+            j = 0
+            linelist = []
+            for ch in line:
+                if ch == '.':
+                    linelist.append(0)
+                elif ch == '#':
+                    linelist.append(1)
+                else:
+                    print('Unexpected character at %i,%i' % (i,j))
+                    quit()
+            asterlist.append(linelist)
+    return asterlist
