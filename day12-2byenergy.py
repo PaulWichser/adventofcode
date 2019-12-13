@@ -45,7 +45,7 @@ def moonergy(moons):
         pot1 = abs(moons['moon%i' % m][0]) + abs(moons['moon%i' % m][1]) + abs(moons['moon%i' % m][2])
         kin1 = abs(moons['moon%i' % m][3]) + abs(moons['moon%i' % m][4]) + abs(moons['moon%i' % m][5])
         energy += (pot1 * kin1)
-    print('System energy: %i' % energy)
+    # print('System energy: %i' % energy)
     return energy
 
 def mooncalc(filename,steps):
@@ -62,16 +62,29 @@ def mooncalc(filename,steps):
 
 def moonreturn(filename):
     moons = moonimp(filename)
-    hash = str(moons)
-    hashes = []
-    while hash not in hashes:
-        hashes.append(hash)
+    steps = 0
+    energy = str(moonergy(moons))
+    states = {energy:[]}
+    win = 0
+    while win == 0:
+        for i in range(len(states[energy])):
+            if states[energy][i] == str(moons):
+                print('Found it! It took %i steps to repeat a position' % steps)
+                win = 1
+        states[energy].append(str(moons))
         moonvel(moons)
         moonpos(moons)
-        hash = str(moons)
-        # print(hash)
-        # print(hashes)
-    print('It took %i steps to return the system to repeat a position' % (len(hashes)))
+        steps += 1
+    # hash = hashlib.md5(str(moons).encode('utf-8')).hexdigest()[8:]
+    # hashes = []
+    # while hash not in hashes:
+    #     hashes.append(hash)
+    #     moonvel(moons)
+    #     moonpos(moons)
+    #     hash = hashlib.md5(str(moons).encode('utf-8')).hexdigest()[8:]
+    #     # print(hash)
+    #     # print(hashes)
+    # print('It took %i steps to return the system to repeat a position' % (len(hashes)))
 
 
 if mooncalc('day12-1test1.txt',10) != 179 or mooncalc('day12-1test2.txt',100) != 1940 or mooncalc('day12-1input.txt', 1000) != 9441:

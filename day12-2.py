@@ -1,5 +1,6 @@
 import fileimp
 import hashlib
+import time
 
 def moonimp(filename):
     inlist = fileimp.intimp(filename)
@@ -61,6 +62,9 @@ def mooncalc(filename,steps):
 
 def moonreturn(filename):
     moons = moonimp(filename)
+    # steps =
+    # states = {}
+    #
     hash = hashlib.md5(str(moons).encode('utf-8')).hexdigest()[8:]
     hashes = []
     while hash not in hashes:
@@ -77,4 +81,7 @@ if mooncalc('day12-1test1.txt',10) != 179 or mooncalc('day12-1test2.txt',100) !=
     print('Test failed!')
     quit()
 
+t = time.time()
+print('%i seconds' % (time.time()-t))
 moonreturn('day12-1input.txt')
+print('%i seconds' % (time.time()-t))
