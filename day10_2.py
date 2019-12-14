@@ -44,7 +44,9 @@ if bestaster(fileimp.asterimp('day10-1test1.txt'))[0][0] != 35 or bestaster(file
 
 def laser(filename):
     loc, slopes = bestaster(fileimp.asterimp(filename))
-
+    for q in slopes:
+        for slope in slopes[q]:
+            
 #find best asteroid (23,19) (loc[1],loc[2])
 #find distance to each other asteroid (sqrt((x1-x0)^2+(y1-y0)^2)) slopes[q][slope][distance]
 #starting straight up (slope 999999999) in q1, shoot closest min(slopes[q][slope])
