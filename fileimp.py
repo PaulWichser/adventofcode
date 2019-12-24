@@ -80,3 +80,12 @@ def asterimp(filename):
                     quit()
             asterlist.append(linelist)
     return asterlist
+
+def fftimp(filename):
+    list = []
+    with open(filename,'r') as file:
+        for line in file:
+            line = line.rstrip('\n')
+            for ch in line:
+                list.append(int(ch))
+    return list
