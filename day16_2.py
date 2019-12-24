@@ -21,17 +21,22 @@ def pattlistgen(patt,step,inlength):
                 j+=1
 
     list.pop(0)
-    print(len(list))
+    # print(len(list))
     return list
 
 def listcalc(inlist):
     outlist = []
+    p = 0
     for i in range(len(inlist)):
         pattlist = pattlistgen(patt,i,len(inlist))
         linetot = 0
         for j in range(len(inlist)):
             linetot += (inlist[j] * pattlist[j])
         outlist.append(abs(linetot) % 10)
+        p2 = p
+        p = int(i/len(inlist))
+        if p2 != p:
+            print(p)
     # print(outlist)
     return outlist
 
@@ -43,7 +48,7 @@ def firsteight(inlist,steps):
         output += inlist[8 - (i+1)]*(10**i)
     return output
 
-def whicheight(inlist,steps,offset):
+def whicheight(inlist,steps):
     for i in range(steps):
         inlist = listcalc(inlist)
         print(i)
@@ -64,7 +69,7 @@ def newlist(inlist,repeats):
     return outlist
 
 def testfile(filename,ans,repeats):
-    test = whicheight(newlist(fileimp.fftimp(filename),repeats),100,repeats)
+    test = whicheight(newlist(fileimp.fftimp(filename),repeats),100)
     if test != ans:
         print(test)
         print('Test failed')
