@@ -3,7 +3,7 @@ def listimp(filename):
         list = []
         for line in file:
             line = line.rstrip('\n')
-            list.append(int(line))
+            list.append(line)
     return list
 
 def intimp(filename):
