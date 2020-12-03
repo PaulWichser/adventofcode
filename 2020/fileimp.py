@@ -62,8 +62,8 @@ def sifimp(filename,w,h):
         l += 1
     return image
 
-def asterimp(filename):
-    asterlist = []
+def gridimp(filename):
+    gridlist = []
     with open(filename,'r') as file:
         i = 0
         for line in file:
@@ -78,8 +78,8 @@ def asterimp(filename):
                 else:
                     print('Unexpected character at %i,%i' % (i,j))
                     quit()
-            asterlist.append(linelist)
-    return asterlist
+            gridlist.append(linelist)
+    return gridlist
 
 def fftimp(filename):
     list = []
