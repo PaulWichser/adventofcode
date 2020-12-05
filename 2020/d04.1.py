@@ -31,7 +31,8 @@ def validate(list):
             valid = valid + 1
     return valid
 
-if validate(cleanlist(fileimp.listimp('d04.test.txt'))) != 2:
+
+if validate(cleanlist(fileimp.listimp('d04.1.test.txt'))) != 2:
     print("Test Failed!")
     quit()
 
