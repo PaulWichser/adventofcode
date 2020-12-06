@@ -6,6 +6,19 @@ def listimp(filename):
             list.append(line)
     return list
 
+def cleanlist(list):
+    returnlist = []
+    string = ""
+    for i in list:
+        if i == '':
+            returnlist.append(string.lstrip(" "))
+            string = ""
+        else:
+            string = string + " " + i
+    returnlist.append(string.lstrip(" "))
+    # print(returnlist)
+    return returnlist
+
 def intimp(filename):
     list=[]
     with open(filename,'r') as file:
